@@ -6,3 +6,11 @@ spring:
   jpa:
     show-sql: true
 
+  jwt:
+    secretKey: ${JWT_SECRET}
+    accessTokenExpiration: 900
+    refreshTokenExpiration: 604800
+
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true

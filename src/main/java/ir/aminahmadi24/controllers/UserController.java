@@ -32,7 +32,6 @@ public class UserController {
         return ResponseEntity.created(uri).body(userMapper.toUserRegisterResponse(user));
     }
 
-
     @ExceptionHandler(DuplicatedEmailException.class)
     private ResponseEntity<ErrorResponse> handleDuplicatedEmail(DuplicatedEmailException e){
         return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));

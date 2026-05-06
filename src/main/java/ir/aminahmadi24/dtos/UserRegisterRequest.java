@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter
-@Setter
 public class UserRegisterRequest {
     @NotBlank
     @Size(min = 3, max = 255)
