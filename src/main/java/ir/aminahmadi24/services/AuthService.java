@@ -10,6 +10,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
@@ -38,5 +40,11 @@ public class AuthService {
         cookie.setSecure(true);
         response.addCookie(cookie);
         return accessToken;
+    }
+
+    public User getCurrentUser(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long userId = (Long) authentication.getPrincipal();
+        return userRepository.findById(userId).orElse(null);
     }
 }

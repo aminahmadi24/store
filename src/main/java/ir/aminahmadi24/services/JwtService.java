@@ -1,5 +1,7 @@
 package ir.aminahmadi24.services;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import ir.aminahmadi24.configs.JwtConfig;
@@ -35,4 +37,24 @@ public class JwtService {
                 .signWith(jwtConfig.getSecretKey())
                 .compact();
     }
+
+    public Claims getPayloadFromToken(String token){
+        return Jwts
+                .parser()
+                .verifyWith(jwtConfig.getSecretKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+    }
+
+    public boolean isTokenExpired(String token){
+        try{
+            Claims payload = getPayloadFromToken(token);
+            return payload.getExpiration().before(new Date());
+        }catch (JwtException ex){
+            return true;
+        }
+    }
+
+
 }
