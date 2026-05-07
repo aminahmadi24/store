@@ -1,10 +1,12 @@
 package ir.aminahmadi24.controllers;
 
 import ir.aminahmadi24.dtos.ErrorResponse;
+import ir.aminahmadi24.dtos.UserDto;
 import ir.aminahmadi24.dtos.UserLoginRequest;
 import ir.aminahmadi24.dtos.JwtResponse;
 import ir.aminahmadi24.entities.User;
 import ir.aminahmadi24.exceptions.UserNotFoundException;
+import ir.aminahmadi24.mappers.UserMapper;
 import ir.aminahmadi24.repositories.UserRepository;
 import ir.aminahmadi24.services.AuthService;
 import ir.aminahmadi24.services.JwtService;
@@ -14,8 +16,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
@@ -26,6 +26,7 @@ public class AuthController {
     private final AuthService authService;
     private final UserRepository userRepository;
     private final JwtService jwtService;
+    private final UserMapper userMapper;
 
     @PostMapping("/login")
     public ResponseEntity<JwtResponse> login(
@@ -46,6 +47,14 @@ public class AuthController {
             throw new UserNotFoundException();
         String accessToken = jwtService.generateAccessToken(currentUser);
         return ResponseEntity.ok(new JwtResponse(accessToken));
+    }
+
+    @GetMapping("/me")
+    public UserDto me(){
+        User currentUser = authService.getCurrentUser();
+        if(currentUser == null)
+            throw new UserNotFoundException();
+        return userMapper.toUserDto(currentUser);
     }
 
     @ExceptionHandler(UserNotFoundException.class)
