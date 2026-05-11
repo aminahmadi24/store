@@ -47,11 +47,9 @@ public class SecurityConfig {
                         c.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(c -> c
-                        .requestMatchers("/api/users/**").permitAll()
-                        .requestMatchers("/api/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/categories").permitAll()
                         .requestMatchers("/api/auth/refresh").authenticated()
                         .requestMatchers("/api/auth/me").authenticated()
+                        .anyRequest().permitAll()
                 ).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(c -> {
                             c.authenticationEntryPoint(
