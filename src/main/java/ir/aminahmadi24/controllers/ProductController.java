@@ -13,11 +13,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
-
 
     private final ProductService productService;
     private final ProductMapper productMapper;
@@ -26,6 +27,11 @@ public class ProductController {
     public ResponseEntity<ProductDto> addProduct(@Valid @RequestBody AddProductRequest request){
         Product product = productService.addProduct(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(productMapper.toProductDto(product));
+    }
+
+    @GetMapping
+    public List<ProductDto> getAllProducts(){
+        return productService.getAllProducts();
     }
 
     @ExceptionHandler(CategoryNotFoundException.class)

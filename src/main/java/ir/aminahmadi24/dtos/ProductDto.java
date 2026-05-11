@@ -2,7 +2,6 @@ package ir.aminahmadi24.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.ToString;
 
 @AllArgsConstructor
 @Getter
