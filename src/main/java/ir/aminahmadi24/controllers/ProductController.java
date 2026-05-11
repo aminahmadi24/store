@@ -3,8 +3,10 @@ package ir.aminahmadi24.controllers;
 import ir.aminahmadi24.dtos.AddProductRequest;
 import ir.aminahmadi24.dtos.ProductDto;
 import ir.aminahmadi24.dtos.ErrorResponse;
+import ir.aminahmadi24.dtos.UpdateProductStockQuantityRequest;
 import ir.aminahmadi24.entities.Product;
 import ir.aminahmadi24.exceptions.CategoryNotFoundException;
+import ir.aminahmadi24.exceptions.ProductNotFoundException;
 import ir.aminahmadi24.mappers.ProductMapper;
 import ir.aminahmadi24.services.ProductService;
 import jakarta.validation.Valid;
@@ -34,8 +36,21 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
+    @PutMapping("/{productId}")
+    public ResponseEntity<Void> updateProductStockQuantity(
+            @PathVariable(name = "productId") Long productId,
+            @Valid @RequestBody UpdateProductStockQuantityRequest request){
+        productService.updateProductStockQuantity(productId, request);
+        return ResponseEntity.ok().build();
+    }
+
     @ExceptionHandler(CategoryNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleCategoryNotFound(CategoryNotFoundException ex){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(ex.getMessage()));
+    }
+
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleCategoryNotFound(ProductNotFoundException ex){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorResponse(ex.getMessage()));
     }
 }

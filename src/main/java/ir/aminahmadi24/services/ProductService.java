@@ -2,9 +2,11 @@ package ir.aminahmadi24.services;
 
 import ir.aminahmadi24.dtos.AddProductRequest;
 import ir.aminahmadi24.dtos.ProductDto;
+import ir.aminahmadi24.dtos.UpdateProductStockQuantityRequest;
 import ir.aminahmadi24.entities.Category;
 import ir.aminahmadi24.entities.Product;
 import ir.aminahmadi24.exceptions.CategoryNotFoundException;
+import ir.aminahmadi24.exceptions.ProductNotFoundException;
 import ir.aminahmadi24.mappers.ProductMapper;
 import ir.aminahmadi24.repositories.CategoryRepository;
 import ir.aminahmadi24.repositories.ProductRepository;
@@ -40,5 +42,12 @@ public class ProductService {
         return productRepository.getAll().stream()
                 .map(productMapper::toProductDto)
                 .toList();
+    }
+
+    public void updateProductStockQuantity(Long productId, UpdateProductStockQuantityRequest request){
+        Product product = productRepository.findById(productId)
+                .orElseThrow(ProductNotFoundException::new);
+        product.setStockQuantity(product.getStockQuantity() + request.getStockQuantity());
+        productRepository.save(product);
     }
 }
