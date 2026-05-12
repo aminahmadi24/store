@@ -1,7 +1,11 @@
 package ir.aminahmadi24.entities;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "cart_items")
 public class CartItem {
@@ -20,4 +24,8 @@ public class CartItem {
 
     @Column(name = "quantity")
     private Integer quantity;
+
+    public Long getTotalPrice(){
+        return quantity * product.getPrice();
+    }
 }

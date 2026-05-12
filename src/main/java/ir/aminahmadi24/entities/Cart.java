@@ -22,10 +22,33 @@ public class Cart {
     @Column(name = "created_at")
     private Date createdAt;
 
-    @OneToMany(mappedBy = "cart", cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+    @OneToMany(mappedBy = "cart", cascade = {CascadeType.PERSIST, CascadeType.MERGE,CascadeType.REMOVE}, orphanRemoval = true)
     private Set<CartItem> items = new HashSet<>();
 
     public Cart(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public CartItem getItem(Long productId) {
+        return items
+                .stream()
+                .filter(item -> item.getProduct().getId() == productId)
+                .findFirst()
+                .orElse(null);
+    }
+
+
+    public CartItem addItem(Product product) {
+        CartItem item = getItem(product.getId());
+        if (item == null) {
+            item = new CartItem();
+            item.setCart(this);
+            item.setQuantity(1);
+            item.setProduct(product);
+            items.add(item);
+        } else {
+            item.setQuantity(item.getQuantity() + 1);
+        }
+        return item;
     }
 }
