@@ -1,49 +1,54 @@
--Store – Modular & Production‑Ready Store API
--Authentication & Authorization
-  JWT-based login
-  Refresh token via HttpOnly cookie
-  Access token regeneration endpoint
-  /me endpoint for returning authenticated user details
-  Secure, production‑ready auth flow
-  
--Product Management
-  Create new products
-  Retrieve all products
-  Update product stock quantity
-  Validations & clean request/response models
+# Store API
 
--Category Management
-  Create categories for product grouping
-  Extensible structure for future taxonomy
+A modular and extensible **Store API** built with **Spring Boot**, designed to provide a clean, secure, and production-ready backend for an e-commerce application.
 
--Cart System
-  Cart entity with associated CartItem
-  Create a new Cart
-  Add products to a cart
-  Retrieve an existing cart with all items
-  Stock‑aware operations
+This project includes **JWT-based authentication**, **category and product management**, **stock handling**, and a fully functional **shopping cart system**.
 
--Clean Architecture Practices
-  Layered structure for maintainability
-  Separation of concerns
-  DTO-based API design
-  Proper exception handling
-  Production-grade configuration with application.yaml
+---
 
--Tech Stack
-  Java + Spring Boot
-  Spring Web
-  Spring Security  
-  JWT Authentication
-  RESTful API Design
-  Layered/Clean Architecture principles  
+## Overview
 
--Future Enhancements
-  Order system
-  Payment simulation
-  Admin panel endpoints
-  Product search & filtering
-  Inventory reservation logic  
+This repository represents the backend of a store management system.  
+It was developed step-by-step with a focus on:
 
--Author
-  Developed by Amin Ahmadi
+- secure authentication
+- RESTful API design
+---
+
+## Features
+
+### Authentication
+- User registration
+- JWT-based login
+- Refresh token stored in **HttpOnly cookie**
+- Access token generation from refresh token
+- `/me` endpoint for retrieving authenticated user information
+
+### Category Management
+- Create categories
+- Structured product grouping for future scalability
+
+### Product Management
+- Add products
+- Retrieve all products
+- Update product stock quantity
+- Validation-friendly API design
+
+### Cart Management
+- Create a cart
+- Add products to a cart
+- Retrieve cart with cart items
+- Cart and CartItem entity modeling
+
+---
+
+## Tech Stack
+
+- **Java**
+- **Spring Boot**
+- **Spring Web**
+- **Spring Security**
+- **JWT**
+- **REST API**
+- **application.yaml** configuration
+
