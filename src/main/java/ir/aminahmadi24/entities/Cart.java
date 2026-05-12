@@ -37,6 +37,15 @@ public class Cart {
                 .orElse(null);
     }
 
+    public Long getTotalPrice(){
+        Long totalPrice = 0L;
+        for (CartItem item: items){
+            totalPrice += item.getTotalPrice();
+        }
+        return totalPrice;
+    }
+
+
 
     public CartItem addItem(Product product) {
         CartItem item = getItem(product.getId());

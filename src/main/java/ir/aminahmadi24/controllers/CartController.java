@@ -1,9 +1,6 @@
 package ir.aminahmadi24.controllers;
 
-import ir.aminahmadi24.dtos.AddProductToCartRequest;
-import ir.aminahmadi24.dtos.CartItemDto;
-import ir.aminahmadi24.dtos.CreateCartResponse;
-import ir.aminahmadi24.dtos.ErrorResponse;
+import ir.aminahmadi24.dtos.*;
 import ir.aminahmadi24.entities.Cart;
 import ir.aminahmadi24.exceptions.CartNotFoundException;
 import ir.aminahmadi24.exceptions.ProductNotFoundException;
@@ -39,6 +36,11 @@ public class CartController {
             @PathVariable(name = "cartId") UUID cartId,
             @Valid @RequestBody AddProductToCartRequest request){
         return cartService.addItemToCart(cartId, request);
+    }
+
+    @GetMapping("/{cartId}")
+    public CartDto getCart(@PathVariable(name = "cartId") UUID cartId){
+        return cartService.getCart(cartId);
     }
 
     @ExceptionHandler(CartNotFoundException.class)

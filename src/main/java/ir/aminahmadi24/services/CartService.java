@@ -1,6 +1,7 @@
 package ir.aminahmadi24.services;
 
 import ir.aminahmadi24.dtos.AddProductToCartRequest;
+import ir.aminahmadi24.dtos.CartDto;
 import ir.aminahmadi24.dtos.CartItemDto;
 import ir.aminahmadi24.entities.Cart;
 import ir.aminahmadi24.entities.CartItem;
@@ -32,4 +33,10 @@ public class CartService {
         cartRepository.save(cart);
         return cartMapper.toCartItemDto(cartItem);
     }
+
+    public CartDto getCart(UUID cartId){
+        Cart cart = cartRepository.getCartWithItems(cartId).orElseThrow(CartNotFoundException::new);
+        return  cartMapper.toCartDto(cart);
+    }
+
 }
